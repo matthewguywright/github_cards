@@ -9,13 +9,21 @@ class SearchForm extends React.Component {
         }
     }
 
-    handleSubmit = async (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
+        const self = this;
         if(this.state.userName) {
-            const response = await fetch(`${this.state.githubApiUrl}${this.state.userName}`);
-            const respJson = response.json();
-            this.props.onSubmit(respJson);
-            this.setState({ userName: '' });
+            fetch(`${this.state.githubApiUrl}${this.state.userName}`)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        self.props.onSubmit(result);
+                        self.setState({ userName: '' });
+                    },
+                    (error) => {
+                        console.log(error.message);
+                    }
+                );
         }
     }
 
