@@ -12,8 +12,14 @@ class App extends React.Component {
 
   addNewProfile = (profileData) => {
       this.setState(prevState => ({
-          profiles: [...prevState.profiles, profileData]
+          profiles: [profileData, ...prevState.profiles]
       }));
+  }
+
+  clearCards = () => {
+      this.setState({
+            profiles: []
+      });
   }
 
   render = () => {
@@ -24,7 +30,7 @@ class App extends React.Component {
                 <SearchForm onSubmit={this.addNewProfile} />
              </div>
           <div className="card-body">
-            <CardList profiles={this.state.profiles} />
+            <CardList onClick={this.clearCards} profiles={this.state.profiles} />
           </div>
         </div>
     );
